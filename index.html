@@ -1,0 +1,107 @@
+<!--
+Rules
+_________________________________
+
+required
+min:1
+max:10
+email
+letter
+numeric
+alphanumeric
+
+each rule will be separated by '|' and give parameter by inserting ':'
+
+-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+    .err {
+        border: 1px solid #f00;
+    }
+    .info , span{
+        color: #f00;
+    }
+	
+    </style>
+</head>
+<body>
+    
+    <form action="">
+        <p>
+        	<input type="text" data-rules="required">
+        	<span></span>
+        </p>
+        <p>
+        	<input type="text" data-rules="min:5|numeric">
+        	<span></span>
+        </p>
+        <p>
+        	<input type="text" data-rules="min:5|alphanumeric|adil">
+        	<span></span>
+        </p>
+        <p>
+        	<input type="text">
+        	<span></span>
+        </p>
+        <p>
+        	<button>Save</button>
+        </p>
+    </form>
+    
+    
+    <form action="">
+        <p>
+        	<input type="text">
+        	<span></span>
+        </p>
+        <p>
+        	<button>Save</button>
+        </p>
+    </form>
+    
+    <script src="jquery-1.11.1.js"></script>
+    <script src="validator.js"></script>
+    <script>
+    var errors = {
+		min: "Minimum lenght should be",
+		required: "This field is required",
+		adil: "Field must contain adil",
+		alphanumeric: "Should have alpha numeric values",
+		numeric: "should contain numeric value"
+	}
+	
+	var rule = {
+		adil: function() {
+			if(this.val().indexOf('adil') !== -1)
+				return true;
+			
+			return false;
+		}
+		
+	}
+	
+	/*Validator will take fuction and rule object as parameter*/
+	/*function has for parameter
+		error = boolean
+		element = jquery elemet object 
+		log = rule
+		param = param
+	*/
+    $('form').validator(function(error, element, log, param) {
+		if(error) {
+			element.addClass('err').parent().children('span').text(errors[log] + " " + param);
+		}else {
+			element.removeClass('err').parent().children('span').text("");
+			
+		}
+	}, rule);
+		
+    </script>
+</body>
+</html>
